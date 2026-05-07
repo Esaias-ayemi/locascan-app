@@ -76,8 +76,17 @@ CREATE TABLE semester_registrations (
   registered_at timestamp with time zone
 );
 
--- OPTIONAL: Add Row Level Security (RLS) policies if you want true database-level security.
--- By default (if RLS is disabled), requests from your application's API anon-key will be able to read/write all rows.
+-- 7. Fix RLS (Row Level Security) Issues
+-- If you receive an error "new row violates row-level security policy for table 'users'", 
+-- it means Supabase enabled RLS on your tables by default. 
+-- For development/testing (so the anon-key can access these tables), you can disable RLS:
+
+ALTER TABLE users DISABLE ROW LEVEL SECURITY;
+ALTER TABLE courses DISABLE ROW LEVEL SECURITY;
+ALTER TABLE sessions DISABLE ROW LEVEL SECURITY;
+ALTER TABLE attendance DISABLE ROW LEVEL SECURITY;
+ALTER TABLE course_registrations DISABLE ROW LEVEL SECURITY;
+ALTER TABLE semester_registrations DISABLE ROW LEVEL SECURITY;
 ```
 
 ## Important Notes on Authentication
