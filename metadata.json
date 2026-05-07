@@ -1,0 +1,8 @@
+{
+  "name": "Remix: LocaScan",
+  "description": "Secure QR and GPS-based attendance for educational institutions.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
