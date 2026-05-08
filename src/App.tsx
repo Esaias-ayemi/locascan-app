@@ -130,9 +130,9 @@ const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HT
   ({ className, variant = 'primary', size = 'md', ...props }, ref) => {
     const variants = {
       primary: 'bg-black text-white hover:bg-zinc-800',
-      secondary: 'bg-zinc-100 text-zinc-900 hover:bg-zinc-200',
-      outline: 'border border-zinc-200 bg-transparent hover:bg-zinc-50',
-      ghost: 'bg-transparent hover:bg-zinc-100 text-zinc-600',
+      secondary: 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-50 hover:bg-zinc-200',
+      outline: 'border border-zinc-200 dark:border-zinc-800 bg-transparent hover:bg-zinc-50',
+      ghost: 'bg-transparent hover:bg-zinc-100 text-zinc-600 dark:text-zinc-300',
       danger: 'bg-red-500 text-white hover:bg-red-600',
       navy: 'bg-navy-900 text-white hover:bg-navy-800',
     };
@@ -161,7 +161,7 @@ const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLI
     <input
       ref={ref}
       className={cn(
-        'flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+        'flex h-11 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}
@@ -170,7 +170,7 @@ const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLI
 );
 
 const Card = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <div className={cn('rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm', className)}>
+  <div className={cn('rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-sm', className)}>
     {children}
   </div>
 );
@@ -212,7 +212,7 @@ const Onboarding = ({ user, onComplete }: { user: User; onComplete: (u: User) =>
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col">
       <div className="flex-1 flex items-center justify-center p-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
@@ -220,48 +220,48 @@ const Onboarding = ({ user, onComplete }: { user: User; onComplete: (u: User) =>
           className="w-full max-w-5xl grid md:grid-cols-2 gap-12 items-center"
         >
           <div className="space-y-8">
-            <div className="bg-navy-900 text-white p-3 rounded-2xl w-fit">
+            <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 p-3 rounded-2xl w-fit">
               <User className="h-8 w-8" />
             </div>
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight leading-none">
                 Complete your <br />
-                <span className="text-zinc-400 italic">profile.</span>
+                <span className="text-zinc-400 dark:text-zinc-500 italic">profile.</span>
               </h1>
-              <p className="text-lg text-zinc-500 leading-relaxed max-w-sm">
+              <p className="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-sm">
                 We need a few more details to personalize your {user.role} experience.
               </p>
             </div>
             
             <div className="hidden md:block space-y-6 pt-8">
-              <div className="flex items-center gap-4 text-zinc-400">
-                <div className="w-10 h-10 rounded-full border border-zinc-100 flex items-center justify-center font-bold text-sm">1</div>
+              <div className="flex items-center gap-4 text-zinc-400 dark:text-zinc-500">
+                <div className="w-10 h-10 rounded-full border border-zinc-100 dark:border-zinc-800 flex items-center justify-center font-bold text-sm">1</div>
                 <span className="font-medium">Account Created</span>
               </div>
-              <div className="flex items-center gap-4 text-navy-900">
-                <div className="w-10 h-10 rounded-full bg-navy-900 text-white flex items-center justify-center font-bold text-sm">2</div>
+              <div className="flex items-center gap-4 text-navy-900 dark:text-white dark:text-navy-100">
+                <div className="w-10 h-10 rounded-full bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 flex items-center justify-center font-bold text-sm">2</div>
                 <span className="font-medium">Profile Details</span>
               </div>
-              <div className="flex items-center gap-4 text-zinc-400">
-                <div className="w-10 h-10 rounded-full border border-zinc-100 flex items-center justify-center font-bold text-sm">3</div>
+              <div className="flex items-center gap-4 text-zinc-400 dark:text-zinc-500">
+                <div className="w-10 h-10 rounded-full border border-zinc-100 dark:border-zinc-800 flex items-center justify-center font-bold text-sm">3</div>
                 <span className="font-medium">Ready to Go</span>
               </div>
             </div>
           </div>
 
-          <Card className="p-10 border-zinc-100 shadow-2xl shadow-navy-900/5 rounded-[2.5rem]">
+          <Card className="p-10 border-zinc-100 dark:border-zinc-800 shadow-2xl shadow-navy-900/5 rounded-[2.5rem]">
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Personal Data Section */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-zinc-100">
-                  <Mail className="h-4 w-4 text-navy-900" />
-                  <h3 className="text-sm font-bold text-navy-900 uppercase tracking-wider">Personal Data</h3>
+                <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800">
+                  <Mail className="h-4 w-4 text-navy-900 dark:text-white dark:text-navy-100" />
+                  <h3 className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100 uppercase tracking-wider">Personal Data</h3>
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Full Name</label>
+                  <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Full Name</label>
                   <Input 
-                    className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                    className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                     value={formData.name} 
                     onChange={e => setFormData({ ...formData, name: e.target.value })} 
                     required 
@@ -270,17 +270,17 @@ const Onboarding = ({ user, onComplete }: { user: User; onComplete: (u: User) =>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Email (Read-only)</label>
+                    <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Email (Read-only)</label>
                     <Input 
-                      className="h-14 rounded-2xl bg-zinc-100 border-transparent cursor-not-allowed opacity-70"
+                      className="h-14 rounded-2xl bg-zinc-100 dark:bg-zinc-800/50 dark:bg-zinc-800 border-transparent cursor-not-allowed opacity-70"
                       value={user.email} 
                       readOnly
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Phone Number</label>
+                    <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Phone Number</label>
                     <Input 
-                      className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                      className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                       placeholder="08012345678"
                       value={formData.phone_number} 
                       onChange={e => setFormData({ ...formData, phone_number: e.target.value })} 
@@ -292,18 +292,18 @@ const Onboarding = ({ user, onComplete }: { user: User; onComplete: (u: User) =>
 
               {/* Student/Lecturer Details Section */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-zinc-100">
-                  <BookOpen className="h-4 w-4 text-navy-900" />
-                  <h3 className="text-sm font-bold text-navy-900 uppercase tracking-wider">
+                <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800">
+                  <BookOpen className="h-4 w-4 text-navy-900 dark:text-white dark:text-navy-100" />
+                  <h3 className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100 uppercase tracking-wider">
                     {user.role === 'student' ? 'Student Details' : 'Staff Details'}
                   </h3>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Department</label>
+                    <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Department</label>
                     <select 
-                      className="flex h-14 w-full rounded-2xl border-transparent bg-zinc-50 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-900 focus:bg-white focus:border-navy-900 transition-all"
+                      className="flex h-14 w-full rounded-2xl border-transparent bg-zinc-50 dark:bg-zinc-900 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-900 focus:bg-white focus:border-navy-900 transition-all"
                       value={formData.department}
                       onChange={e => setFormData({ ...formData, department: e.target.value })}
                       required
@@ -317,9 +317,9 @@ const Onboarding = ({ user, onComplete }: { user: User; onComplete: (u: User) =>
                   </div>
                   {user.role === 'student' && (
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Level</label>
+                      <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Level</label>
                       <select 
-                        className="flex h-14 w-full rounded-2xl border-transparent bg-zinc-50 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-900 focus:bg-white focus:border-navy-900 transition-all"
+                        className="flex h-14 w-full rounded-2xl border-transparent bg-zinc-50 dark:bg-zinc-900 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-900 focus:bg-white focus:border-navy-900 transition-all"
                         value={formData.level}
                         onChange={e => setFormData({ ...formData, level: e.target.value })}
                         required
@@ -337,9 +337,9 @@ const Onboarding = ({ user, onComplete }: { user: User; onComplete: (u: User) =>
 
                 {user.role === 'student' && (
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Matric Number</label>
+                    <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Matric Number</label>
                     <Input 
-                      className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                      className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                       value={formData.matric_number} 
                       onChange={e => setFormData({ ...formData, matric_number: e.target.value })} 
                       required 
@@ -355,7 +355,7 @@ const Onboarding = ({ user, onComplete }: { user: User; onComplete: (u: User) =>
                 </div>
               )}
 
-              <Button className="w-full h-14 rounded-2xl text-lg bg-navy-900 hover:bg-navy-800 shadow-xl shadow-navy-900/20" disabled={loading}>
+              <Button className="w-full h-14 rounded-2xl text-lg bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 hover:bg-navy-800 shadow-xl shadow-navy-900/20" disabled={loading}>
                 {loading ? 'Saving...' : 'Complete Registration'}
               </Button>
             </form>
@@ -370,17 +370,17 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white text-navy-900 font-sans selection:bg-navy-100">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 text-navy-900 dark:text-white dark:text-navy-100 font-sans selection:bg-navy-100">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-100 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-2 font-bold text-2xl tracking-tight">
-            <div className="bg-navy-900 text-white p-1.5 rounded-xl">
+            <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 p-1.5 rounded-xl">
               <CheckCircle className="h-6 w-6" />
             </div>
             LocaScan
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
             <a href="#features" className="hover:text-navy-900 transition-colors">Features</a>
             <a href="#about" className="hover:text-navy-900 transition-colors">About</a>
             <a href="#how-it-works" className="hover:text-navy-900 transition-colors">How it Works</a>
@@ -406,9 +406,9 @@ const LandingPage = () => {
           >
             <h1 className="text-6xl md:text-8xl font-bold tracking-tight leading-[0.9] mb-8">
               Secure. Bi-Modal.<br />
-              <span className="text-zinc-400 italic">Seamless.</span>
+              <span className="text-zinc-400 dark:text-zinc-500 italic">Seamless.</span>
             </h1>
-            <p className="text-xl text-zinc-500 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
               A dynamic QR and GPS-based attendance tracking system designed for modern educational institutions. Eliminate proxy attendance with precision.
             </p>
           </motion.div>
@@ -431,7 +431,7 @@ const LandingPage = () => {
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="py-32 bg-zinc-50 px-6">
+      <section id="features" className="py-32 bg-zinc-50 dark:bg-zinc-900 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -460,13 +460,13 @@ const LandingPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white p-10 rounded-[2.5rem] border border-zinc-100 shadow-sm hover:shadow-xl transition-all group"
+                className="bg-white dark:bg-zinc-950 p-10 rounded-[2.5rem] border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-xl transition-all group"
               >
                 <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-8 transition-transform group-hover:scale-110", feature.color)}>
                   <feature.icon className="h-7 w-7" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-zinc-500 leading-relaxed">{feature.description}</p>
+                <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -480,7 +480,7 @@ const LandingPage = () => {
             <h2 className="text-5xl font-bold tracking-tight leading-none">
               Why Bi-Modal Attendance?
             </h2>
-            <p className="text-lg text-zinc-500 leading-relaxed">
+            <p className="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
               Traditional attendance methods are prone to manipulation. Our platform combines visual verification (QR) with spatial verification (GPS) to create a foolproof system.
             </p>
             <div className="space-y-4">
@@ -491,7 +491,7 @@ const LandingPage = () => {
                 "Secure and encrypted data handling"
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-navy-900 flex items-center justify-center text-white">
+                  <div className="w-6 h-6 rounded-full bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 flex items-center justify-center">
                     <CheckCircle className="h-4 w-4" />
                   </div>
                   <span className="font-medium">{item}</span>
@@ -516,20 +516,20 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-20 border-t border-zinc-100 px-6">
+      <footer className="py-20 border-t border-zinc-100 dark:border-zinc-800 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="flex items-center gap-2 font-bold text-2xl tracking-tight">
-            <div className="bg-navy-900 text-white p-1.5 rounded-xl">
+            <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 p-1.5 rounded-xl">
               <CheckCircle className="h-6 w-6" />
             </div>
             LocaScan
           </div>
-          <div className="flex gap-10 text-sm font-medium text-zinc-400">
+          <div className="flex gap-10 text-sm font-medium text-zinc-400 dark:text-zinc-500">
             <a href="#" className="hover:text-navy-900 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-navy-900 transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-navy-900 transition-colors">Contact Us</a>
           </div>
-          <div className="text-zinc-400 text-sm">
+          <div className="text-zinc-400 dark:text-zinc-500 text-sm">
             © 2026 LocaScan Platform. All rights reserved.
           </div>
         </div>
@@ -604,7 +604,7 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 flex flex-col">
       <div className="flex-1 flex items-center justify-center p-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -613,12 +613,12 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
         >
           <div className="mb-12 text-center">
             <div className="inline-flex items-center gap-2 font-bold text-3xl tracking-tight mb-4">
-              <div className="bg-navy-900 text-white p-2 rounded-2xl">
+              <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 p-2 rounded-2xl">
                 <CheckCircle className="h-7 w-7" />
               </div>
               LocaScan
             </div>
-            <p className="text-zinc-400 font-medium">
+            <p className="text-zinc-400 dark:text-zinc-500 font-medium">
               {isResetPassword ? 'Enter your new password' : 
                isForgotPassword ? 'Reset your account password' :
                isRegister ? 'Create your account to get started' : 
@@ -626,23 +626,23 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
             </p>
           </div>
 
-          <Card className="p-10 border-zinc-100 shadow-2xl shadow-navy-900/5 rounded-[2.5rem]">
+          <Card className="p-10 border-zinc-100 dark:border-zinc-800 shadow-2xl shadow-navy-900/5 rounded-[2.5rem]">
             <form onSubmit={handleSubmit} className="space-y-6">
               {isResetPassword ? (
                 <>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Reset Token</label>
+                    <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Reset Token</label>
                     <Input 
-                      className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                      className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                       value={resetToken} 
                       onChange={(e) => setResetToken(e.target.value)} 
                       required 
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">New Password</label>
+                    <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">New Password</label>
                     <Input 
-                      className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                      className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                       type="password" 
                       placeholder="••••••••"
                       value={newPassword} 
@@ -653,9 +653,9 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                 </>
               ) : isForgotPassword ? (
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Email Address</label>
+                  <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Email Address</label>
                   <Input 
-                    className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                    className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                     type="email" 
                     placeholder="name@university.edu"
                     value={email} 
@@ -667,9 +667,9 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                 <>
                   {isRegister && (
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Full Name</label>
+                      <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Full Name</label>
                       <Input 
-                        className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                        className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                         placeholder="John Doe"
                         value={name} 
                         onChange={(e) => setName(e.target.value)} 
@@ -678,9 +678,9 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                     </div>
                   )}
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Email Address</label>
+                    <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Email Address</label>
                     <Input 
-                      className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                      className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                       type="email" 
                       placeholder="name@university.edu"
                       value={email} 
@@ -690,7 +690,7 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Password</label>
+                      <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Password</label>
                       {!isRegister && (
                         <button 
                           type="button"
@@ -702,7 +702,7 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                       )}
                     </div>
                     <Input 
-                      className="h-14 rounded-2xl bg-zinc-50 border-transparent focus:bg-white focus:border-navy-900 transition-all"
+                      className="h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border-transparent focus:bg-white focus:border-navy-900 transition-all"
                       type="password" 
                       placeholder="••••••••"
                       value={password} 
@@ -712,9 +712,9 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                   </div>
                   {isRegister && (
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">I am a...</label>
+                      <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">I am a...</label>
                       <select 
-                        className="flex h-14 w-full rounded-2xl border-transparent bg-zinc-50 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-900 focus:bg-white focus:border-navy-900 transition-all"
+                        className="flex h-14 w-full rounded-2xl border-transparent bg-zinc-50 dark:bg-zinc-900 px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy-900 focus:bg-white focus:border-navy-900 transition-all"
                         value={role}
                         onChange={(e) => setRole(e.target.value as any)}
                       >
@@ -739,7 +739,7 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                 </div>
               )}
               
-              <Button className="w-full h-14 rounded-2xl text-lg bg-navy-900 hover:bg-navy-800 shadow-xl shadow-navy-900/20" disabled={loading}>
+              <Button className="w-full h-14 rounded-2xl text-lg bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 hover:bg-navy-800 shadow-xl shadow-navy-900/20" disabled={loading}>
                 {loading ? 'Processing...' : 
                  isResetPassword ? 'Reset Password' :
                  isForgotPassword ? 'Send Reset Link' : 
@@ -756,7 +756,7 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
                   setError('');
                   setSuccess('');
                 }}
-                className="text-sm font-bold text-zinc-400 hover:text-navy-900 transition-colors uppercase tracking-widest"
+                className="text-sm font-bold text-zinc-400 dark:text-zinc-500 hover:text-navy-900 transition-colors uppercase tracking-widest"
               >
                 {isRegister ? 'Already have an account? Login' : 
                  isForgotPassword ? 'Back to Login' :
@@ -1109,7 +1109,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
       case 'home':
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="bg-navy-900 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 rounded-3xl p-8 shadow-xl relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-3xl font-bold mb-2">Lecturer Portal</h2>
                 <p className="text-navy-100 opacity-80">{user.department} • Email: {user.email}</p>
@@ -1131,7 +1131,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-navy-900">My Courses</h3>
+                <h3 className="text-lg font-bold text-navy-900 dark:text-white dark:text-navy-100">My Courses</h3>
                 <Button size="sm" variant="outline" onClick={() => setShowAddCourse(true)} className="rounded-xl">
                   <Plus className="h-4 w-4 mr-1" /> Add
                 </Button>
@@ -1146,7 +1146,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <select 
-                        className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none"
+                        className="flex h-11 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm focus:outline-none"
                         value={newCourse.department}
                         onChange={e => setNewCourse({...newCourse, department: e.target.value})}
                         required
@@ -1158,7 +1158,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                         <option value="Physics">Physics</option>
                       </select>
                       <select 
-                        className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none"
+                        className="flex h-11 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm focus:outline-none"
                         value={newCourse.level}
                         onChange={e => setNewCourse({...newCourse, level: e.target.value})}
                         required
@@ -1173,16 +1173,16 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-zinc-400 uppercase">Min. Attendance (%)</label>
+                        <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Min. Attendance (%)</label>
                         <Input type="number" placeholder="70" value={newCourse.required_attendance} onChange={e => setNewCourse({...newCourse, required_attendance: e.target.value})} required />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-zinc-400 uppercase">Expected Classes</label>
+                        <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Expected Classes</label>
                         <Input type="number" placeholder="10" value={newCourse.expected_classes} onChange={e => setNewCourse({...newCourse, expected_classes: e.target.value})} required />
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button type="submit" className="flex-1 bg-navy-900" disabled={loading}>Create Course</Button>
+                      <Button type="submit" className="flex-1 bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900" disabled={loading}>Create Course</Button>
                       <Button type="button" variant="ghost" onClick={() => setShowAddCourse(false)}>Cancel</Button>
                     </div>
                   </form>
@@ -1191,7 +1191,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
 
               <div className="grid gap-3">
                 {courses.map(course => (
-                  <Card key={course.id} className="p-4 border-zinc-100 flex flex-col gap-4 transition-all">
+                  <Card key={course.id} className="p-4 border-zinc-100 dark:border-zinc-800 flex flex-col gap-4 transition-all">
                     <div 
                       className="flex items-center justify-between cursor-pointer"
                       onClick={() => {
@@ -1205,19 +1205,19 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                       }}
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 font-bold">
+                        <div className="w-10 h-10 bg-navy-50 dark:bg-navy-900/30 rounded-xl flex items-center justify-center text-navy-900 dark:text-white dark:text-navy-100 font-bold">
                           {course.course_code.substring(0, 2)}
                         </div>
                         <div>
-                          <div className="font-bold text-navy-900">{course.course_code}</div>
-                          <div className="text-xs text-zinc-500">{course.course_title}</div>
+                          <div className="font-bold text-navy-900 dark:text-white dark:text-navy-100">{course.course_code}</div>
+                          <div className="text-xs text-zinc-500 dark:text-zinc-400">{course.course_title}</div>
                         </div>
                       </div>
                       <ChevronRight className={cn("h-4 w-4 text-zinc-300 transition-transform", managingCourse?.id === course.id && "rotate-90")} />
                     </div>
 
                     {managingCourse?.id === course.id && !editingCourse && (
-                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-4 border-t border-zinc-100 flex gap-2">
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-4 border-t border-zinc-100 dark:border-zinc-800 flex gap-2">
                         <Button 
                           variant="secondary" 
                           size="sm" 
@@ -1238,7 +1238,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                     )}
 
                     {editingCourse?.id === course.id && (
-                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-4 border-t border-zinc-100">
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-4 border-t border-zinc-100 dark:border-zinc-800">
                         <form onSubmit={updateCourse} className="space-y-4">
                           <div className="grid grid-cols-2 gap-4">
                             <Input placeholder="Code" value={editingCourse.course_code} onChange={e => setEditingCourse({...editingCourse, course_code: e.target.value})} required />
@@ -1246,7 +1246,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                             <select 
-                              className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none"
+                              className="flex h-11 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm focus:outline-none"
                               value={editingCourse.department}
                               onChange={e => setEditingCourse({...editingCourse, department: e.target.value})}
                               required
@@ -1257,7 +1257,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                               <option value="Physics">Physics</option>
                             </select>
                             <select 
-                              className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none"
+                              className="flex h-11 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm focus:outline-none"
                               value={editingCourse.level}
                               onChange={e => setEditingCourse({...editingCourse, level: e.target.value})}
                               required
@@ -1271,16 +1271,16 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
-                              <label className="text-[10px] font-bold text-zinc-400 uppercase">Min. Attendance (%)</label>
+                              <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Min. Attendance (%)</label>
                               <Input type="number" value={editingCourse.required_attendance} onChange={e => setEditingCourse({...editingCourse, required_attendance: e.target.value})} required />
                             </div>
                             <div className="space-y-1">
-                              <label className="text-[10px] font-bold text-zinc-400 uppercase">Expected Classes</label>
+                              <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Expected Classes</label>
                               <Input type="number" value={editingCourse.expected_classes} onChange={e => setEditingCourse({...editingCourse, expected_classes: e.target.value})} required />
                             </div>
                           </div>
                           <div className="flex gap-2">
-                            <Button type="submit" className="flex-1 bg-navy-900" disabled={loading}>Save</Button>
+                            <Button type="submit" className="flex-1 bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900" disabled={loading}>Save</Button>
                             <Button type="button" variant="ghost" onClick={() => setEditingCourse(null)}>Cancel</Button>
                           </div>
                         </form>
@@ -1296,29 +1296,29 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
       case 'analytics':
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <h2 className="text-2xl font-bold text-navy-900">Attendance Analytics</h2>
+            <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Attendance Analytics</h2>
             <div className="grid gap-4">
               {courseStats.map(course => (
-                <Card key={course.id} className="p-5 space-y-6 border-zinc-100">
+                <Card key={course.id} className="p-5 space-y-6 border-zinc-100 dark:border-zinc-800">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h4 className="font-bold text-navy-900 text-lg">{course.course_code}</h4>
-                      <p className="text-xs text-zinc-500">{course.course_title}</p>
+                      <h4 className="font-bold text-navy-900 dark:text-white dark:text-navy-100 text-lg">{course.course_code}</h4>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400">{course.course_title}</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-[10px] font-bold text-zinc-400 uppercase">Students</div>
-                      <div className="text-lg font-bold text-navy-900">{course.total_students}</div>
+                      <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Students</div>
+                      <div className="text-lg font-bold text-navy-900 dark:text-white dark:text-navy-100">{course.total_students}</div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-50">
+                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-50 dark:border-zinc-900">
                     <div className="space-y-1">
-                      <div className="text-[10px] font-bold text-zinc-400 uppercase">Total Sessions</div>
-                      <div className="text-sm font-bold text-navy-900">{course.total_sessions}</div>
+                      <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Total Sessions</div>
+                      <div className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100">{course.total_sessions}</div>
                     </div>
                     <div className="space-y-1">
-                      <div className="text-[10px] font-bold text-zinc-400 uppercase">Active Attendance</div>
-                      <div className="text-sm font-bold text-navy-900">{course.students_attended_at_least_once}</div>
+                      <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Active Attendance</div>
+                      <div className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100">{course.students_attended_at_least_once}</div>
                     </div>
                   </div>
 
@@ -1440,9 +1440,9 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                 <motion.div 
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
-                  className="bg-white w-full max-w-2xl rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] flex flex-col"
+                  className="bg-white dark:bg-zinc-950 w-full max-w-2xl rounded-t-3xl sm:rounded-3xl overflow-hidden max-h-[90vh] flex flex-col"
                 >
-                  <div className="p-6 border-b border-zinc-100 flex items-center justify-between bg-navy-900 text-white">
+                  <div className="p-6 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900">
                     <div>
                       <h3 className="text-xl font-bold">
                         {selectedSession?.isOverall ? 'Overall Attendance' : `${selectedCourse.course_code} Sessions`}
@@ -1466,23 +1466,23 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                               setSelectedSession(session);
                               fetchSessionAttendance(session.id);
                             }}
-                            className="flex items-center justify-between p-4 rounded-2xl border border-zinc-100 hover:border-navy-900 transition-all text-left group"
+                            className="flex items-center justify-between p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800 hover:border-navy-900 transition-all text-left group"
                           >
                             <div>
-                              <div className="font-bold text-navy-900">{new Date(session.created_at).toLocaleDateString()}</div>
-                              <div className="text-xs text-zinc-500">{new Date(session.created_at).toLocaleTimeString()}</div>
+                              <div className="font-bold text-navy-900 dark:text-white dark:text-navy-100">{new Date(session.created_at).toLocaleDateString()}</div>
+                              <div className="text-xs text-zinc-500 dark:text-zinc-400">{new Date(session.created_at).toLocaleTimeString()}</div>
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="text-right">
-                                <div className="text-[10px] font-bold text-zinc-400 uppercase">Attendees</div>
-                                <div className="text-sm font-bold text-navy-900">{session.attendance_count}</div>
+                                <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Attendees</div>
+                                <div className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100">{session.attendance_count}</div>
                               </div>
                               <ChevronRight className="h-4 w-4 text-zinc-300 group-hover:text-navy-900" />
                             </div>
                           </button>
                         ))}
                         {selectedCourseSessions.length === 0 && (
-                          <div className="text-center py-12 text-zinc-400">No sessions recorded for this course.</div>
+                          <div className="text-center py-12 text-zinc-400 dark:text-zinc-500">No sessions recorded for this course.</div>
                         )}
                       </div>
                     ) : (
@@ -1491,7 +1491,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                           <ChevronRight className="h-4 w-4 rotate-180 mr-1" /> Back to Sessions
                         </Button>
                         <div className="flex items-center justify-between">
-                          <h4 className="font-bold text-navy-900">
+                          <h4 className="font-bold text-navy-900 dark:text-white dark:text-navy-100">
                             {selectedSession.isOverall ? 'Student List' : `Attendees (${sessionAttendance.length})`}
                           </h4>
                           <Button 
@@ -1504,10 +1504,10 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                         </div>
                         <div className="grid gap-2">
                           {sessionAttendance.map((student, idx) => (
-                            <div key={idx} className="flex items-center justify-between p-3 bg-zinc-50 rounded-xl">
+                            <div key={idx} className="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-900 rounded-xl">
                               <div className="flex-1">
-                                <div className="font-bold text-sm text-navy-900">{student.name}</div>
-                                <div className="text-[10px] text-zinc-500">{student.matric_number}</div>
+                                <div className="font-bold text-sm text-navy-900 dark:text-white dark:text-navy-100">{student.name}</div>
+                                <div className="text-[10px] text-zinc-500 dark:text-zinc-400">{student.matric_number}</div>
                               </div>
                               {selectedSession.isOverall ? (
                                 <div className="text-right">
@@ -1517,10 +1517,10 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                                   )}>
                                     {student.percentage}%
                                   </div>
-                                  <div className="text-[10px] text-zinc-400">{student.attended} sessions</div>
+                                  <div className="text-[10px] text-zinc-400 dark:text-zinc-500">{student.attended} sessions</div>
                                 </div>
                               ) : (
-                                <div className="text-[10px] text-zinc-400">{new Date(student.signed_in_at).toLocaleTimeString()}</div>
+                                <div className="text-[10px] text-zinc-400 dark:text-zinc-500">{new Date(student.signed_in_at).toLocaleTimeString()}</div>
                               )}
                             </div>
                           ))}
@@ -1538,33 +1538,33 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold text-navy-900">Start Attendance</h2>
-              <p className="text-zinc-500 text-sm px-8">Select a course to generate a dynamic QR code for students to scan.</p>
+              <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Start Attendance</h2>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm px-8">Select a course to generate a dynamic QR code for students to scan.</p>
             </div>
 
-            <Card className="p-8 border-zinc-100">
+            <Card className="p-8 border-zinc-100 dark:border-zinc-800">
               {courses.length === 0 ? (
                 <div className="text-center py-12 space-y-4">
-                  <div className="w-16 h-16 bg-navy-50 rounded-full flex items-center justify-center mx-auto">
-                    <BookOpen className="h-8 w-8 text-navy-900 opacity-20" />
+                  <div className="w-16 h-16 bg-navy-50 dark:bg-navy-900/30 rounded-full flex items-center justify-center mx-auto">
+                    <BookOpen className="h-8 w-8 text-navy-900 dark:text-white dark:text-navy-100 opacity-20" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="font-bold text-navy-900">No Courses Found</h3>
-                    <p className="text-sm text-zinc-500">You need to add courses in the Home tab before you can start attendance.</p>
+                    <h3 className="font-bold text-navy-900 dark:text-white dark:text-navy-100">No Courses Found</h3>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">You need to add courses in the Home tab before you can start attendance.</p>
                   </div>
                   <Button variant="outline" onClick={() => setActiveTab('home')}>Go to Home</Button>
                 </div>
               ) : activeSession ? (
                 <div className="flex flex-col items-center space-y-6">
-                  <div className="p-6 bg-white rounded-3xl shadow-2xl border border-zinc-100">
+                  <div className="p-6 bg-white dark:bg-zinc-950 rounded-3xl shadow-2xl border border-zinc-100 dark:border-zinc-800">
                     <QRCodeSVG value={activeSession.qr_token} size={240} level="H" />
                   </div>
                   <div className="text-center space-y-4 w-full">
                     <div>
-                      <h3 className="text-xl font-bold text-navy-900">{selectedCourse?.course_code}</h3>
-                      <p className="text-sm text-zinc-500">Session is active and rotating</p>
+                      <h3 className="text-xl font-bold text-navy-900 dark:text-white dark:text-navy-100">{selectedCourse?.course_code}</h3>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400">Session is active and rotating</p>
                     </div>
-                    <div className="flex items-center justify-center gap-2 text-xs text-zinc-400">
+                    <div className="flex items-center justify-center gap-2 text-xs text-zinc-400 dark:text-zinc-500">
                       <Clock className="h-4 w-4" />
                       QR code updates every 60 seconds
                     </div>
@@ -1576,7 +1576,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
               ) : (
                 <div className="space-y-8">
                   <div className="space-y-4">
-                    <label className="text-sm font-bold text-navy-900 uppercase tracking-wider">Select Course</label>
+                    <label className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100 uppercase tracking-wider">Select Course</label>
                     <div className="grid gap-3">
                       {courses.map(course => (
                         <button
@@ -1586,12 +1586,12 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                             "w-full flex items-center justify-between p-5 rounded-2xl border transition-all text-left",
                             selectedCourse?.id === course.id 
                               ? "border-navy-900 bg-navy-900 text-white shadow-lg" 
-                              : "border-zinc-100 bg-zinc-50 hover:border-zinc-200"
+                              : "border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 hover:border-zinc-200"
                           )}
                         >
                           <div>
                             <div className="font-bold">{course.course_code}</div>
-                            <div className={cn("text-xs opacity-70", selectedCourse?.id === course.id ? "text-white" : "text-zinc-500")}>
+                            <div className={cn("text-xs opacity-70", selectedCourse?.id === course.id ? "text-white" : "text-zinc-500 dark:text-zinc-400")}>
                               {course.course_title}
                             </div>
                           </div>
@@ -1601,16 +1601,16 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                     </div>
                   </div>
 
-                  <div className="space-y-4 pt-4 border-t border-zinc-100">
+                  <div className="space-y-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-navy-900 uppercase">Location Restriction</span>
+                      <span className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100 uppercase">Location Restriction</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-zinc-400">Manual</span>
+                        <span className="text-xs text-zinc-400 dark:text-zinc-500">Manual</span>
                         <input 
                           type="checkbox" 
                           checked={manualLocation} 
                           onChange={e => setManualLocation(e.target.checked)}
-                          className="h-4 w-4 rounded border-zinc-300 text-navy-900 focus:ring-navy-900"
+                          className="h-4 w-4 rounded border-zinc-300 dark:border-zinc-700 text-navy-900 dark:text-white dark:text-navy-100 focus:ring-navy-900"
                         />
                       </div>
                     </div>
@@ -1623,7 +1623,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                     )}
 
                     <div className="space-y-2">
-                      <div className="flex justify-between text-xs font-bold text-zinc-400 uppercase">
+                      <div className="flex justify-between text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase">
                         <span>Radius</span>
                         <span>{customCoords.radius} meters</span>
                       </div>
@@ -1634,7 +1634,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                         step="10"
                         value={customCoords.radius}
                         onChange={e => setCustomCoords({...customCoords, radius: e.target.value})}
-                        className="w-full h-2 bg-zinc-100 rounded-lg appearance-none cursor-pointer accent-navy-900"
+                        className="w-full h-2 bg-zinc-100 dark:bg-zinc-800/50 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-navy-900"
                       />
                     </div>
                   </div>
@@ -1642,7 +1642,7 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
                   <Button 
                     onClick={startSession} 
                     disabled={loading || !selectedCourse} 
-                    className="w-full h-16 text-lg bg-navy-900 hover:bg-navy-800 rounded-2xl shadow-xl shadow-navy-900/20"
+                    className="w-full h-16 text-lg bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 hover:bg-navy-800 rounded-2xl shadow-xl shadow-navy-900/20"
                   >
                     {loading ? <RefreshCw className="h-6 w-6 animate-spin" /> : 'Start Attendance'}
                   </Button>
@@ -1655,34 +1655,34 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
       case 'settings':
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <h2 className="text-2xl font-bold text-navy-900">Settings</h2>
+            <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Settings</h2>
             
             <div className="space-y-3">
-              <Card className="p-6 border-zinc-100 space-y-6">
+              <Card className="p-6 border-zinc-100 dark:border-zinc-800 space-y-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-navy-900 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="w-16 h-16 bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 rounded-full flex items-center justify-center text-2xl font-bold">
                     {user.name.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="font-bold text-navy-900 text-lg">{user.name}</h3>
-                    <p className="text-zinc-500 text-sm">{user.email}</p>
+                    <h3 className="font-bold text-navy-900 dark:text-white dark:text-navy-100 text-lg">{user.name}</h3>
+                    <p className="text-zinc-500 dark:text-zinc-400 text-sm">{user.email}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-50">
+                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-50 dark:border-zinc-900">
                   <div className="space-y-1">
-                    <div className="text-[10px] font-bold text-zinc-400 uppercase">Email</div>
-                    <div className="text-sm font-medium text-navy-900 truncate">{user.email}</div>
+                    <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Email</div>
+                    <div className="text-sm font-medium text-navy-900 dark:text-white dark:text-navy-100 truncate">{user.email}</div>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-[10px] font-bold text-zinc-400 uppercase">Department</div>
-                    <div className="text-sm font-medium text-navy-900">{user.department || 'N/A'}</div>
+                    <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Department</div>
+                    <div className="text-sm font-medium text-navy-900 dark:text-white dark:text-navy-100">{user.department || 'N/A'}</div>
                   </div>
                 </div>
               </Card>
 
               <div className="space-y-2">
-                <button className="w-full flex items-center justify-between p-4 bg-zinc-50 rounded-2xl text-zinc-600 hover:bg-zinc-100 transition-colors">
+                <button className="w-full flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-2xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 transition-colors">
                   <div className="flex items-center gap-3">
                     <Shield className="h-5 w-5" />
                     <span className="font-medium">Privacy & Security</span>
@@ -1991,12 +1991,12 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-20">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-navy-900">Dashboard</h2>
+              <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Dashboard</h2>
               <Button variant="ghost" size="sm" onClick={refreshData} disabled={loading}>
                 <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
               </Button>
             </div>
-            <div className="bg-navy-900 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 rounded-3xl p-8 shadow-xl relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-3xl font-bold mb-2">Welcome Back!</h2>
                 <p className="text-navy-100 opacity-80">{user.department} • {user.level} Level</p>
@@ -2019,17 +2019,17 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-navy-900">Registered Courses</h3>
+              <h3 className="text-lg font-bold text-navy-900 dark:text-white dark:text-navy-100">Registered Courses</h3>
               <div className="grid gap-3">
                 {attendanceStats.map(course => (
-                  <Card key={course.id} className="flex items-center justify-between p-4 border-zinc-100">
+                  <Card key={course.id} className="flex items-center justify-between p-4 border-zinc-100 dark:border-zinc-800">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 font-bold">
+                      <div className="w-10 h-10 bg-navy-50 dark:bg-navy-900/30 rounded-xl flex items-center justify-center text-navy-900 dark:text-white dark:text-navy-100 font-bold">
                         {course.course_code.substring(0, 2)}
                       </div>
                       <div>
-                        <div className="font-bold text-navy-900">{course.course_code}</div>
-                        <div className="text-xs text-zinc-500">{course.course_title}</div>
+                        <div className="font-bold text-navy-900 dark:text-white dark:text-navy-100">{course.course_code}</div>
+                        <div className="text-xs text-zinc-500 dark:text-zinc-400">{course.course_title}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -2041,7 +2041,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                   </Card>
                 ))}
                 {attendanceStats.length === 0 && (
-                  <div className="text-center py-12 text-zinc-400">
+                  <div className="text-center py-12 text-zinc-400 dark:text-zinc-500">
                     <BookOpen className="h-12 w-12 mx-auto mb-2 opacity-20" />
                     <p>No courses registered yet</p>
                   </div>
@@ -2051,7 +2051,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-navy-900">Attendance History</h3>
+                <h3 className="text-lg font-bold text-navy-900 dark:text-white dark:text-navy-100">Attendance History</h3>
                 <input 
                   type="date" 
                   value={historyDate}
@@ -2059,27 +2059,27 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                     setHistoryDate(e.target.value);
                     fetchAttendanceHistory(e.target.value);
                   }}
-                  className="text-xs font-medium border border-zinc-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-navy-900"
+                  className="text-xs font-medium border border-zinc-200 dark:border-zinc-800 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-navy-900"
                 />
               </div>
-              <Card className="p-4 border-zinc-100">
+              <Card className="p-4 border-zinc-100 dark:border-zinc-800">
                 {attendanceHistory.length > 0 ? (
                   <div className="space-y-3">
                     {attendanceHistory.map((record, i) => (
-                      <div key={i} className="flex items-center justify-between py-2 border-b border-zinc-50 last:border-0">
+                      <div key={i} className="flex items-center justify-between py-2 border-b border-zinc-50 dark:border-zinc-900 last:border-0">
                         <div>
-                          <div className="text-sm font-bold text-navy-900">{record.course_code}</div>
-                          <div className="text-[10px] text-zinc-500">{record.course_title}</div>
+                          <div className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100">{record.course_code}</div>
+                          <div className="text-[10px] text-zinc-500 dark:text-zinc-400">{record.course_title}</div>
                         </div>
                         <div className="text-right">
                           <div className="text-xs font-medium text-emerald-600">Present</div>
-                          <div className="text-[10px] text-zinc-400">{new Date(record.marked_at).toLocaleTimeString()}</div>
+                          <div className="text-[10px] text-zinc-400 dark:text-zinc-500">{new Date(record.marked_at).toLocaleTimeString()}</div>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-8 text-zinc-400">
+                  <div className="text-center py-8 text-zinc-400 dark:text-zinc-500">
                     <Clock className="h-8 w-8 mx-auto mb-2 opacity-10" />
                     <p className="text-xs">No attendance records for this date</p>
                   </div>
@@ -2093,14 +2093,14 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-20">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-navy-900">Attendance Summary</h2>
+              <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Attendance Summary</h2>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-zinc-400 uppercase">Check Date:</span>
+                <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Check Date:</span>
                 <input 
                   type="date" 
                   value={analyticsDate}
                   onChange={(e) => setAnalyticsDate(e.target.value)}
-                  className="text-xs font-medium border border-zinc-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-navy-900"
+                  className="text-xs font-medium border border-zinc-200 dark:border-zinc-800 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-navy-900"
                 />
               </div>
             </div>
@@ -2121,11 +2121,11 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                 );
                 
                 return (
-                  <Card key={course.id} className="p-5 space-y-6 border-zinc-100">
+                  <Card key={course.id} className="p-5 space-y-6 border-zinc-100 dark:border-zinc-800">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="font-bold text-navy-900 text-lg">{course.course_code}</h4>
-                        <p className="text-xs text-zinc-500">{course.course_title}</p>
+                        <h4 className="font-bold text-navy-900 dark:text-white dark:text-navy-100 text-lg">{course.course_code}</h4>
+                        <p className="text-xs text-zinc-500 dark:text-zinc-400">{course.course_title}</p>
                       </div>
                       <div className="flex flex-col items-end gap-1">
                         <div className={cn(
@@ -2134,35 +2134,35 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                         )}>
                           {overallPercentage}% Overall
                         </div>
-                        <div className="text-[10px] font-bold text-zinc-400 uppercase">
+                        <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">
                           {currentPercentage}% Current
                         </div>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-4 gap-2">
-                      <div className="bg-zinc-50 rounded-2xl p-2 text-center">
-                        <div className="text-sm font-bold text-navy-900">{totalExpected}</div>
-                        <div className="text-[8px] font-bold text-zinc-400 uppercase">Expected</div>
+                      <div className="bg-zinc-50 dark:bg-zinc-900 rounded-2xl p-2 text-center">
+                        <div className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100">{totalExpected}</div>
+                        <div className="text-[8px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Expected</div>
                       </div>
-                      <div className="bg-navy-50 rounded-2xl p-2 text-center">
-                        <div className="text-sm font-bold text-navy-900">{heldSoFar}</div>
-                        <div className="text-[8px] font-bold text-zinc-400 uppercase">Held</div>
+                      <div className="bg-navy-50 dark:bg-navy-900/30 rounded-2xl p-2 text-center">
+                        <div className="text-sm font-bold text-navy-900 dark:text-white dark:text-navy-100">{heldSoFar}</div>
+                        <div className="text-[8px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Held</div>
                       </div>
                       <div className="bg-emerald-50 rounded-2xl p-2 text-center">
                         <div className="text-sm font-bold text-emerald-600">{attended}</div>
-                        <div className="text-[8px] font-bold text-zinc-400 uppercase">Present</div>
+                        <div className="text-[8px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Present</div>
                       </div>
                       <div className="bg-red-50 rounded-2xl p-2 text-center">
                         <div className="text-sm font-bold text-red-600">{absent}</div>
-                        <div className="text-[8px] font-bold text-zinc-400 uppercase">Absent</div>
+                        <div className="text-[8px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Absent</div>
                       </div>
                     </div>
 
-                    <div className="p-3 bg-zinc-50 rounded-2xl flex items-center justify-between">
+                    <div className="p-3 bg-zinc-50 dark:bg-zinc-900 rounded-2xl flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-navy-900" />
-                        <span className="text-xs font-medium text-navy-900">Status for {analyticsDate}</span>
+                        <Calendar className="h-4 w-4 text-navy-900 dark:text-white dark:text-navy-100" />
+                        <span className="text-xs font-medium text-navy-900 dark:text-white dark:text-navy-100">Status for {analyticsDate}</span>
                       </div>
                       {wasPresentOnDate ? (
                         <div className="flex items-center gap-1 text-emerald-600">
@@ -2178,18 +2178,18 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                     </div>
 
                     <div className="space-y-2">
-                      <div className="flex justify-between text-[10px] text-zinc-400 uppercase font-bold">
+                      <div className="flex justify-between text-[10px] text-zinc-400 dark:text-zinc-500 uppercase font-bold">
                         <span>Attendance Progress</span>
                         <span>{overallPercentage}% of {totalExpected} classes</span>
                       </div>
-                      <div className="h-2 w-full bg-zinc-100 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800/50 dark:bg-zinc-800 rounded-full overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${Math.min(100, overallPercentage)}%` }}
                           className={cn("h-full", overallPercentage >= passMark ? "bg-navy-900" : "bg-red-500")}
                         />
                       </div>
-                      <p className="text-[10px] text-zinc-400 italic">
+                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500 italic">
                         * Target: {passMark}% ({Math.ceil(totalExpected * (passMark/100))} classes)
                       </p>
                     </div>
@@ -2197,7 +2197,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                 );
               })}
               {attendanceStats.length === 0 && (
-                <div className="text-center py-24 text-zinc-400">
+                <div className="text-center py-24 text-zinc-400 dark:text-zinc-500">
                   <BarChart3 className="h-16 w-16 mx-auto mb-4 opacity-10" />
                   <p>Register for courses to see analytics</p>
                 </div>
@@ -2210,11 +2210,11 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold text-navy-900">Mark Attendance</h2>
-              <p className="text-zinc-500 text-sm px-8">Scan the QR code displayed by your lecturer to mark your attendance.</p>
+              <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Mark Attendance</h2>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm px-8">Scan the QR code displayed by your lecturer to mark your attendance.</p>
             </div>
 
-            <Card className="p-8 border-zinc-100">
+            <Card className="p-8 border-zinc-100 dark:border-zinc-800">
               {scanning ? (
                 <div className="space-y-6">
                   <div id="reader" className="overflow-hidden rounded-2xl border-4 border-navy-900/10" />
@@ -2222,11 +2222,11 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                 </div>
               ) : (
                 <div className="flex flex-col items-center py-12 space-y-8">
-                  <div className="w-32 h-32 bg-navy-50 rounded-full flex items-center justify-center relative">
-                    <Scan className="h-12 w-12 text-navy-900" />
+                  <div className="w-32 h-32 bg-navy-50 dark:bg-navy-900/30 rounded-full flex items-center justify-center relative">
+                    <Scan className="h-12 w-12 text-navy-900 dark:text-white dark:text-navy-100" />
                     <div className="absolute inset-0 border-2 border-navy-900/20 rounded-full animate-ping" />
                   </div>
-                  <Button onClick={startScanning} className="w-full max-w-xs bg-navy-900 hover:bg-navy-800 h-14 text-lg">
+                  <Button onClick={startScanning} className="w-full max-w-xs bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 hover:bg-navy-800 h-14 text-lg">
                     Start Scanning
                   </Button>
                 </div>
@@ -2239,7 +2239,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                   className={cn(
                     "mt-6 p-4 rounded-2xl text-sm font-medium flex items-center gap-3",
                     status.type === 'success' ? "bg-emerald-50 text-emerald-700" : 
-                    status.type === 'error' ? "bg-red-50 text-red-700" : "bg-navy-50 text-navy-700"
+                    status.type === 'error' ? "bg-red-50 text-red-700" : "bg-navy-50 dark:bg-navy-900/30 text-navy-700"
                   )}
                 >
                   {status.type === 'success' ? <CheckCircle className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
@@ -2254,7 +2254,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-navy-900">Course Registration</h2>
+              <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Course Registration</h2>
             </div>
 
             <div className="space-y-4">
@@ -2274,11 +2274,11 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
               ) : (
                 <>
                   {availableCourses.map(course => (
-                    <Card key={course.id} className="p-5 border-zinc-100 flex items-center justify-between">
+                    <Card key={course.id} className="p-5 border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
                       <div className="space-y-1">
                         <div className="text-xs font-bold text-navy-500 uppercase">{course.course_code}</div>
-                        <h4 className="font-bold text-navy-900">{course.course_title}</h4>
-                        <p className="text-xs text-zinc-400">{course.department} • {course.level} Level</p>
+                        <h4 className="font-bold text-navy-900 dark:text-white dark:text-navy-100">{course.course_title}</h4>
+                        <p className="text-xs text-zinc-400 dark:text-zinc-500">{course.department} • {course.level} Level</p>
                       </div>
                       <Button 
                         size="sm" 
@@ -2291,7 +2291,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                     </Card>
                   ))}
                   {availableCourses.length === 0 && (
-                    <div className="text-center py-24 text-zinc-400">
+                    <div className="text-center py-24 text-zinc-400 dark:text-zinc-500">
                       <Plus className="h-16 w-16 mx-auto mb-4 opacity-10" />
                       <p>No new courses available for registration in your level/department</p>
                     </div>
@@ -2308,12 +2308,12 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-20">
               <div className="flex items-center gap-2">
                 <button onClick={() => setIsEditingProfile(false)} className="p-2 hover:bg-zinc-100 rounded-full transition-colors">
-                  <X className="h-5 w-5 text-zinc-500" />
+                  <X className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
                 </button>
-                <h2 className="text-2xl font-bold text-navy-900">Update Profile</h2>
+                <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Update Profile</h2>
               </div>
               
-              <Card className="p-6 border-zinc-100">
+              <Card className="p-6 border-zinc-100 dark:border-zinc-800">
                 <form 
                   onSubmit={async (e) => {
                     e.preventDefault();
@@ -2347,31 +2347,31 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                   className="space-y-6"
                 >
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2 pb-2 border-b border-zinc-100">
-                      <Mail className="h-4 w-4 text-navy-900" />
-                      <h3 className="text-xs font-bold text-navy-900 uppercase tracking-wider">Personal Data</h3>
+                    <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800">
+                      <Mail className="h-4 w-4 text-navy-900 dark:text-white dark:text-navy-100" />
+                      <h3 className="text-xs font-bold text-navy-900 dark:text-white dark:text-navy-100 uppercase tracking-wider">Personal Data</h3>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Full Name</label>
+                      <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Full Name</label>
                       <Input name="name" defaultValue={user.name} required />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Phone Number</label>
+                      <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Phone Number</label>
                       <Input name="phone_number" defaultValue={user.phone_number} required />
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2 pb-2 border-b border-zinc-100">
-                      <BookOpen className="h-4 w-4 text-navy-900" />
-                      <h3 className="text-xs font-bold text-navy-900 uppercase tracking-wider">Student Details</h3>
+                    <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800">
+                      <BookOpen className="h-4 w-4 text-navy-900 dark:text-white dark:text-navy-100" />
+                      <h3 className="text-xs font-bold text-navy-900 dark:text-white dark:text-navy-100 uppercase tracking-wider">Student Details</h3>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Department</label>
+                        <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Department</label>
                         <select 
                           name="department"
-                          className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950"
+                          className="flex h-11 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950"
                           defaultValue={user.department || ""}
                           required
                         >
@@ -2383,10 +2383,10 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                         </select>
                       </div>
                       <div className="space-y-2">
-                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Level</label>
+                        <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Level</label>
                         <select 
                           name="level"
-                          className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950"
+                          className="flex h-11 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950"
                           defaultValue={user.level || ""}
                           required
                         >
@@ -2400,7 +2400,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Matric Number</label>
+                      <label className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Matric Number</label>
                       <Input name="matric_number" defaultValue={user.matric_number} required />
                     </div>
                   </div>
@@ -2414,7 +2414,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                     </div>
                   )}
 
-                  <Button type="submit" className="w-full h-14 rounded-2xl bg-navy-900" disabled={loading}>
+                  <Button type="submit" className="w-full h-14 rounded-2xl bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900" disabled={loading}>
                     {loading ? 'Updating...' : 'Save Changes'}
                   </Button>
                 </form>
@@ -2428,12 +2428,12 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-20">
               <div className="flex items-center gap-2">
                 <button onClick={() => setIsChangingPassword(false)} className="p-2 hover:bg-zinc-100 rounded-full transition-colors">
-                  <X className="h-5 w-5 text-zinc-500" />
+                  <X className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
                 </button>
-                <h2 className="text-2xl font-bold text-navy-900">Change Password</h2>
+                <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Change Password</h2>
               </div>
               
-              <Card className="p-6 border-zinc-100">
+              <Card className="p-6 border-zinc-100 dark:border-zinc-800">
                 <form 
                   onSubmit={async (e) => {
                     e.preventDefault();
@@ -2454,11 +2454,11 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                     <Input type="password" required />
                   </div>
                   {status && (
-                    <div className="p-4 rounded-2xl bg-navy-50 text-navy-700 text-sm">
+                    <div className="p-4 rounded-2xl bg-navy-50 dark:bg-navy-900/30 text-navy-700 text-sm">
                       {status.message}
                     </div>
                   )}
-                  <Button type="submit" className="w-full h-14 rounded-2xl bg-navy-900">
+                  <Button type="submit" className="w-full h-14 rounded-2xl bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900">
                     Update Password
                   </Button>
                 </form>
@@ -2469,27 +2469,27 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
 
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-20">
-            <h2 className="text-2xl font-bold text-navy-900">Settings</h2>
+            <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Settings</h2>
             
-            <Card className="p-6 border-zinc-100 space-y-6">
+            <Card className="p-6 border-zinc-100 dark:border-zinc-800 space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-navy-900 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 rounded-full flex items-center justify-center text-2xl font-bold">
                   {user.name.charAt(0)}
                 </div>
                 <div>
-                  <h3 className="font-bold text-navy-900 text-lg">{user.name}</h3>
-                  <p className="text-zinc-500 text-sm">{user.email}</p>
+                  <h3 className="font-bold text-navy-900 dark:text-white dark:text-navy-100 text-lg">{user.name}</h3>
+                  <p className="text-zinc-500 dark:text-zinc-400 text-sm">{user.email}</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-50">
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-50 dark:border-zinc-900">
                 <div className="space-y-1">
-                  <div className="text-[10px] font-bold text-zinc-400 uppercase">Matric Number</div>
-                  <div className="text-sm font-medium text-navy-900">{user.matric_number || 'N/A'}</div>
+                  <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Matric Number</div>
+                  <div className="text-sm font-medium text-navy-900 dark:text-white dark:text-navy-100">{user.matric_number || 'N/A'}</div>
                 </div>
                 <div className="space-y-1">
-                  <div className="text-[10px] font-bold text-zinc-400 uppercase">Level</div>
-                  <div className="text-sm font-medium text-navy-900">{user.level || 'N/A'}</div>
+                  <div className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase">Level</div>
+                  <div className="text-sm font-medium text-navy-900 dark:text-white dark:text-navy-100">{user.level || 'N/A'}</div>
                 </div>
               </div>
             </Card>
@@ -2497,7 +2497,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
             <div className="space-y-2">
               <button 
                 onClick={() => setIsEditingProfile(true)}
-                className="w-full flex items-center justify-between p-4 bg-zinc-50 rounded-2xl text-zinc-600 hover:bg-zinc-100 transition-colors"
+                className="w-full flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-2xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <User className="h-5 w-5" />
@@ -2507,7 +2507,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
               </button>
               <button 
                 onClick={() => setIsChangingPassword(true)}
-                className="w-full flex items-center justify-between p-4 bg-zinc-50 rounded-2xl text-zinc-600 hover:bg-zinc-100 transition-colors"
+                className="w-full flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-2xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <Lock className="h-5 w-5" />
@@ -2550,17 +2550,17 @@ const StudentLayout = ({ user, onLogout, children, activeTab, setActiveTab }: {
   setActiveTab: (tab: any) => void;
 }) => {
   return (
-    <div className="min-h-screen bg-white pb-24">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 pb-24">
       {/* Header */}
       <header className="px-6 py-4 flex flex-col gap-1">
-        <div className="flex items-center gap-2 font-bold text-2xl text-navy-900">
-          <div className="bg-navy-900 text-white p-1 rounded-lg">
+        <div className="flex items-center gap-2 font-bold text-2xl text-navy-900 dark:text-white dark:text-navy-100">
+          <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 p-1 rounded-lg">
             <CheckCircle className="h-5 w-5" />
           </div>
           LocaScan
         </div>
         <div className="text-right">
-          <span className="text-sm text-zinc-500">Hello, {user.name}</span>
+          <span className="text-sm text-zinc-500 dark:text-zinc-400">Hello, {user.name}</span>
         </div>
       </header>
 
@@ -2570,7 +2570,7 @@ const StudentLayout = ({ user, onLogout, children, activeTab, setActiveTab }: {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-100 px-6 py-3 pb-8 z-50">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800 px-6 py-3 pb-8 z-50">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           {[
             { id: 'home', icon: LayoutDashboard, label: 'Home' },
@@ -2584,7 +2584,7 @@ const StudentLayout = ({ user, onLogout, children, activeTab, setActiveTab }: {
               onClick={() => setActiveTab(tab.id)}
               className={cn(
                 "flex flex-col items-center gap-1 transition-all",
-                activeTab === tab.id ? "text-navy-900" : "text-zinc-400"
+                activeTab === tab.id ? "text-navy-900 dark:text-white" : "text-zinc-400 dark:text-zinc-500"
               )}
             >
               <tab.icon className={cn("h-6 w-6", activeTab === tab.id && "fill-navy-900/10")} />
@@ -2605,17 +2605,17 @@ const LecturerLayout = ({ user, onLogout, children, activeTab, setActiveTab }: {
   setActiveTab: (tab: any) => void;
 }) => {
   return (
-    <div className="min-h-screen bg-white pb-24">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 pb-24">
       {/* Header */}
       <header className="px-6 py-4 flex flex-col gap-1">
-        <div className="flex items-center gap-2 font-bold text-2xl text-navy-900">
-          <div className="bg-navy-900 text-white p-1 rounded-lg">
+        <div className="flex items-center gap-2 font-bold text-2xl text-navy-900 dark:text-white dark:text-navy-100">
+          <div className="bg-navy-900 dark:bg-navy-100 text-white dark:text-navy-900 p-1 rounded-lg">
             <CheckCircle className="h-5 w-5" />
           </div>
           LocaScan
         </div>
         <div className="text-right">
-          <span className="text-sm text-zinc-500">Hello, {user.name}</span>
+          <span className="text-sm text-zinc-500 dark:text-zinc-400">Hello, {user.name}</span>
         </div>
       </header>
 
@@ -2625,7 +2625,7 @@ const LecturerLayout = ({ user, onLogout, children, activeTab, setActiveTab }: {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-100 px-6 py-3 pb-8 z-50">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800 px-6 py-3 pb-8 z-50">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           {[
             { id: 'home', icon: LayoutDashboard, label: 'Home' },
@@ -2638,7 +2638,7 @@ const LecturerLayout = ({ user, onLogout, children, activeTab, setActiveTab }: {
               onClick={() => setActiveTab(tab.id)}
               className={cn(
                 "flex flex-col items-center gap-1 transition-all",
-                activeTab === tab.id ? "text-navy-900" : "text-zinc-400"
+                activeTab === tab.id ? "text-navy-900 dark:text-white" : "text-zinc-400 dark:text-zinc-500"
               )}
             >
               <tab.icon className={cn("h-6 w-6", activeTab === tab.id && "fill-navy-900/10")} />
@@ -2657,20 +2657,20 @@ export default function App() {
 
   if (!isSupabaseConfigured) {
     return (
-      <div className="min-h-screen bg-zinc-50 flex items-center justify-center p-6">
-        <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-sm border border-zinc-200">
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center p-6">
+        <div className="max-w-md w-full bg-white dark:bg-zinc-950 p-8 rounded-2xl shadow-sm border border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center gap-3 text-amber-600 mb-4">
             <AlertCircle className="h-6 w-6" />
             <h2 className="text-lg font-semibold">Missing Supabase Config</h2>
           </div>
-          <p className="text-zinc-600 text-sm mb-4">
+          <p className="text-zinc-600 dark:text-zinc-300 text-sm mb-4">
             Please configure your Supabase environment variables in the variables menu:
           </p>
-          <ul className="list-disc pl-5 text-sm font-mono text-zinc-500 space-y-2 mb-6 bg-zinc-50 p-4 rounded-xl">
+          <ul className="list-disc pl-5 text-sm font-mono text-zinc-500 dark:text-zinc-400 space-y-2 mb-6 bg-zinc-50 dark:bg-zinc-900 p-4 rounded-xl">
             <li>VITE_SUPABASE_URL</li>
             <li>VITE_SUPABASE_ANON_KEY</li>
           </ul>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
             Once you add them, the application will refresh.
           </p>
         </div>
@@ -2729,7 +2729,7 @@ export default function App() {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-zinc-950">
       <RefreshCw className="h-8 w-8 animate-spin text-zinc-300" />
     </div>
   );
