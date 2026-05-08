@@ -813,6 +813,8 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
   const [manualLocation, setManualLocation] = useState(false);
   const [customCoords, setCustomCoords] = useState({ lat: '', lng: '', radius: '50' });
   const [status, setStatus] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null);
+  const [managingCourse, setManagingCourse] = useState<any | null>(null);
+  const [editingCourse, setEditingCourse] = useState<any | null>(null);
   const timerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -943,6 +945,55 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
       setStatus({ type: 'success', message: 'Course created successfully' });
     } catch (err: any) {
       handleFirestoreError(err, OperationType.CREATE, 'courses');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateCourse = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingCourse) return;
+    setLoading(true);
+    try {
+      await updateDoc(doc(db, 'courses', editingCourse.id), {
+        course_code: editingCourse.course_code,
+        course_title: editingCourse.course_title,
+        level: editingCourse.level,
+        department: editingCourse.department,
+        required_attendance: parseInt(editingCourse.required_attendance),
+        expected_classes: parseInt(editingCourse.expected_classes),
+      });
+      setManagingCourse({ ...editingCourse });
+      setEditingCourse(null);
+      fetchCourses();
+      fetchCourseStats();
+      setStatus({ type: 'success', message: 'Course updated successfully' });
+    } catch (err: any) {
+      handleFirestoreError(err, OperationType.UPDATE, 'courses');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteCourse = async (courseId: string) => {
+    if (!window.confirm('Are you sure you want to delete this course? This will not delete historical attendance but will prevent future sessions.')) return;
+    setLoading(true);
+    try {
+      // Deactivate all active sessions for safety
+      const activeQ = query(collection(db, 'sessions'), where('course_id', '==', courseId), where('is_active', '==', true));
+      const activeSnap = await getDocs(activeQ);
+      const batch = writeBatch(db);
+      activeSnap.docs.forEach(d => batch.update(d.ref, { is_active: false }));
+      await batch.commit();
+
+      await deleteDoc(doc(db, 'courses', courseId));
+      setManagingCourse(null);
+      setEditingCourse(null);
+      fetchCourses();
+      fetchCourseStats();
+      setStatus({ type: 'success', message: 'Course deleted' });
+    } catch (err: any) {
+      handleFirestoreError(err, OperationType.DELETE, 'courses');
     } finally {
       setLoading(false);
     }
@@ -1140,17 +1191,101 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
 
               <div className="grid gap-3">
                 {courses.map(course => (
-                  <Card key={course.id} className="flex items-center justify-between p-4 border-zinc-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 font-bold">
-                        {course.course_code.substring(0, 2)}
+                  <Card key={course.id} className="p-4 border-zinc-100 flex flex-col gap-4 transition-all">
+                    <div 
+                      className="flex items-center justify-between cursor-pointer"
+                      onClick={() => {
+                        if (managingCourse?.id === course.id) {
+                          setManagingCourse(null);
+                          setEditingCourse(null);
+                        } else {
+                          setManagingCourse(course);
+                          setEditingCourse(null);
+                        }
+                      }}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-navy-50 rounded-xl flex items-center justify-center text-navy-900 font-bold">
+                          {course.course_code.substring(0, 2)}
+                        </div>
+                        <div>
+                          <div className="font-bold text-navy-900">{course.course_code}</div>
+                          <div className="text-xs text-zinc-500">{course.course_title}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-bold text-navy-900">{course.course_code}</div>
-                        <div className="text-xs text-zinc-500">{course.course_title}</div>
-                      </div>
+                      <ChevronRight className={cn("h-4 w-4 text-zinc-300 transition-transform", managingCourse?.id === course.id && "rotate-90")} />
                     </div>
-                    <ChevronRight className="h-4 w-4 text-zinc-300" />
+
+                    {managingCourse?.id === course.id && !editingCourse && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-4 border-t border-zinc-100 flex gap-2">
+                        <Button 
+                          variant="secondary" 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => setEditingCourse({ ...course })}
+                        >
+                          Edit
+                        </Button>
+                        <Button 
+                          variant="danger" 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => deleteCourse(course.id)}
+                        >
+                          Delete
+                        </Button>
+                      </motion.div>
+                    )}
+
+                    {editingCourse?.id === course.id && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-4 border-t border-zinc-100">
+                        <form onSubmit={updateCourse} className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <Input placeholder="Code" value={editingCourse.course_code} onChange={e => setEditingCourse({...editingCourse, course_code: e.target.value})} required />
+                            <Input placeholder="Title" value={editingCourse.course_title} onChange={e => setEditingCourse({...editingCourse, course_title: e.target.value})} required />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <select 
+                              className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none"
+                              value={editingCourse.department}
+                              onChange={e => setEditingCourse({...editingCourse, department: e.target.value})}
+                              required
+                            >
+                              <option value="Computer Science">Computer Science</option>
+                              <option value="Engineering">Engineering</option>
+                              <option value="Mathematics">Mathematics</option>
+                              <option value="Physics">Physics</option>
+                            </select>
+                            <select 
+                              className="flex h-11 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none"
+                              value={editingCourse.level}
+                              onChange={e => setEditingCourse({...editingCourse, level: e.target.value})}
+                              required
+                            >
+                              <option value="100">100</option>
+                              <option value="200">200</option>
+                              <option value="300">300</option>
+                              <option value="400">400</option>
+                              <option value="500">500</option>
+                            </select>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-1">
+                              <label className="text-[10px] font-bold text-zinc-400 uppercase">Min. Attendance (%)</label>
+                              <Input type="number" value={editingCourse.required_attendance} onChange={e => setEditingCourse({...editingCourse, required_attendance: e.target.value})} required />
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-[10px] font-bold text-zinc-400 uppercase">Expected Classes</label>
+                              <Input type="number" value={editingCourse.expected_classes} onChange={e => setEditingCourse({...editingCourse, expected_classes: e.target.value})} required />
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button type="submit" className="flex-1 bg-navy-900" disabled={loading}>Save</Button>
+                            <Button type="button" variant="ghost" onClick={() => setEditingCourse(null)}>Cancel</Button>
+                          </div>
+                        </form>
+                      </motion.div>
+                    )}
                   </Card>
                 ))}
               </div>
@@ -2563,8 +2698,9 @@ export default function App() {
             try {
               await setDoc(doc(db, 'users', firebaseUser.uid), placeholderUser);
               setUser(placeholderUser as User);
-            } catch (e) {
+            } catch (e: any) {
               console.error("Failed to create placeholder profile:", e);
+              alert("Sign-in issue: Failed to create your user profile. Are you sure you ran SQL queries in Supabase? " + (e.message || ''));
               await signOut(auth);
               setUser(null);
             }
