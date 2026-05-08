@@ -582,8 +582,7 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
           setSuccess('Registration successful! Please login.');
         } catch (dbErr: any) {
           console.error("Firestore creation error:", dbErr);
-          // If Firestore fails, we should ideally clean up the Auth user,
-          // but for now we just show a specific error
+          await signOut(auth);
           setError(`Account created, but profile setup failed: ${dbErr.message || 'Permission denied'}`);
         }
       } else {
@@ -2552,11 +2551,27 @@ export default function App() {
           if (userSnap.exists()) {
             setUser({ id: userSnap.id, ...userSnap.data() } as User);
           } else {
-            // Profile doc might not exist yet if just registered, handled in Login
-            setUser(null);
+            console.warn("Profile doc missing for user. Attempting to recreate it...");
+            const placeholderUser = {
+              id: firebaseUser.uid,
+              email: firebaseUser.email,
+              name: firebaseUser.email?.split('@')[0] || 'Unknown User',
+              role: 'student',
+              onboarding_completed: false,
+              created_at: serverTimestamp()
+            };
+            try {
+              await setDoc(doc(db, 'users', firebaseUser.uid), placeholderUser);
+              setUser(placeholderUser as User);
+            } catch (e) {
+              console.error("Failed to create placeholder profile:", e);
+              await signOut(auth);
+              setUser(null);
+            }
           }
         } catch (e) {
           console.error("Error fetching profile:", e);
+          await signOut(auth);
           setUser(null);
         }
       } else {
