@@ -795,10 +795,86 @@ const Login = ({ setUser }: { setUser: (u: User) => void }) => {
 };
 
 
+const PrivacySecurityPanel = ({ onBack }: { onBack: () => void }) => {
+  const [dataSharing, setDataSharing] = useState(true);
+  const [locationServices, setLocationServices] = useState(true);
+  
+  return (
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 pb-20">
+      <div className="flex items-center gap-4">
+        <button 
+          onClick={onBack}
+          className="p-2 -ml-2 rounded-xl text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+        >
+          <ArrowLeft className="h-6 w-6" />
+        </button>
+        <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Privacy & Security</h2>
+      </div>
+
+      <Card className="p-6 border-zinc-100 dark:border-zinc-800 space-y-6">
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="font-medium text-navy-900 dark:text-white dark:text-navy-100">Data Sharing</h4>
+              <p className="text-sm text-zinc-500">Allow anonymized analytics to improve the app</p>
+            </div>
+            <button 
+              onClick={() => setDataSharing(!dataSharing)}
+              className={cn("w-11 h-6 rounded-full transition-colors flex items-center px-1 focus:outline-none", dataSharing ? "bg-navy-900 dark:bg-navy-100" : "bg-zinc-200 dark:bg-zinc-700")}
+            >
+              <motion.div 
+                animate={{ x: dataSharing ? 20 : 0 }} 
+                className="w-4 h-4 rounded-full bg-white dark:bg-navy-900 shadow-sm"
+              />
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="font-medium text-navy-900 dark:text-white dark:text-navy-100">Location Services</h4>
+              <p className="text-sm text-zinc-500">Use precise location for tracking attendance</p>
+            </div>
+            <button 
+              onClick={() => setLocationServices(!locationServices)}
+              className={cn("w-11 h-6 rounded-full transition-colors flex items-center px-1 focus:outline-none", locationServices ? "bg-navy-900 dark:bg-navy-100" : "bg-zinc-200 dark:bg-zinc-700")}
+            >
+              <motion.div 
+                animate={{ x: locationServices ? 20 : 0 }} 
+                className="w-4 h-4 rounded-full bg-white dark:bg-navy-900 shadow-sm"
+              />
+            </button>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+            <div>
+              <h4 className="font-medium text-navy-900 dark:text-white dark:text-navy-100">Two-Factor Authentication</h4>
+              <p className="text-sm text-zinc-500">Add an extra layer of security to your account</p>
+            </div>
+            <Button variant="secondary" size="sm" onClick={() => alert("Setting up 2FA requires additional verification.")}>
+              Enable 2FA
+            </Button>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+            <div>
+              <h4 className="font-medium text-navy-900 dark:text-white dark:text-navy-100">Account Data</h4>
+              <p className="text-sm text-zinc-500">Permanently delete your account and all associated data</p>
+            </div>
+            <Button variant="danger" size="sm" onClick={() => { if(window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) alert('Account deletion requested.'); }}>
+              Delete Account
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
+  );
+};
+
 // --- Lecturer Dashboard ---
 
 const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => void }) => {
   const [activeTab, setActiveTab] = useState<'home' | 'analytics' | 'attendance' | 'settings'>('home');
+  const [isPrivacySettings, setIsPrivacySettings] = useState(false);
   const [courses, setCourses] = useState<any[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<any | null>(null);
   const [activeSession, setActiveSession] = useState<Session | null>(null);
@@ -1653,8 +1729,12 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
         );
 
       case 'settings':
+        if (isPrivacySettings) {
+          return <PrivacySecurityPanel onBack={() => setIsPrivacySettings(false)} />;
+        }
+
         return (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-20">
             <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Settings</h2>
             
             <div className="space-y-3">
@@ -1682,7 +1762,10 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
               </Card>
 
               <div className="space-y-2">
-                <button className="w-full flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-2xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 transition-colors">
+                <button 
+                  onClick={() => setIsPrivacySettings(true)}
+                  className="w-full flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-2xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 transition-colors"
+                >
                   <div className="flex items-center gap-3">
                     <Shield className="h-5 w-5" />
                     <span className="font-medium">Privacy & Security</span>
@@ -1728,6 +1811,7 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
   const [selectedSemester, setSelectedSemester] = useState('2025/2026 First Semester');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [isPrivacySettings, setIsPrivacySettings] = useState(false);
   const [attendanceHistory, setAttendanceHistory] = useState<any[]>([]);
   const [historyDate, setHistoryDate] = useState(new Date().toISOString().split('T')[0]);
   const [analyticsDate, setAnalyticsDate] = useState(new Date().toISOString().split('T')[0]);
@@ -2467,6 +2551,10 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
           );
         }
 
+        if (isPrivacySettings) {
+          return <PrivacySecurityPanel onBack={() => setIsPrivacySettings(false)} />;
+        }
+
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-20">
             <h2 className="text-2xl font-bold text-navy-900 dark:text-white dark:text-navy-100">Settings</h2>
@@ -2512,6 +2600,16 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
                 <div className="flex items-center gap-3">
                   <Lock className="h-5 w-5" />
                   <span className="font-medium">Change Password</span>
+                </div>
+                <ChevronRight className="h-4 w-4" />
+              </button>
+              <button 
+                onClick={() => setIsPrivacySettings(true)}
+                className="w-full flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-2xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <Shield className="h-5 w-5" />
+                  <span className="font-medium">Privacy & Security</span>
                 </div>
                 <ChevronRight className="h-4 w-4" />
               </button>
