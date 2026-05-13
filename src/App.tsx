@@ -2042,6 +2042,17 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
             throw new Error(`You are too far away (${Math.round(distance)}m). You must be within ${sessionData.radius_meters}m.`);
           }
 
+          // Check if already scanned
+          const existingQ = query(
+            collection(db, 'attendance'),
+            where('session_id', '==', sessionDoc.id),
+            where('student_id', '==', user.id)
+          );
+          const existingSnap = await getDocs(existingQ);
+          if (!existingSnap.empty) {
+            throw new Error('Attendance already marked for this session');
+          }
+
           // Mark attendance
           await addDoc(collection(db, 'attendance'), {
             student_id: user.id,
