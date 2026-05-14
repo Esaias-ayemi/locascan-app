@@ -28,6 +28,7 @@ import {
   Lock,
   Shield,
   X,
+  ArrowLeft,
   ArrowRight,
   Zap,
   Globe,
@@ -1949,13 +1950,18 @@ const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () =
       await addDoc(collection(db, 'course_registrations'), {
         student_id: user.id,
         course_id: courseId,
-        semester: selectedSemester,
         registered_at: serverTimestamp()
       });
       refreshData();
       setStatus({ type: 'success', message: 'Registered successfully' });
     } catch (err: any) {
-      handleFirestoreError(err, OperationType.CREATE, 'course_registrations');
+      console.error(err);
+      setStatus({ type: 'error', message: err.message || 'Failed to register' });
+      try {
+        handleFirestoreError(err, OperationType.CREATE, 'course_registrations');
+      } catch (e) {
+        // Ignored here
+      }
     } finally {
       setLoading(false);
     }
