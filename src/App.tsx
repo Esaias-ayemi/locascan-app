@@ -874,7 +874,13 @@ const PrivacySecurityPanel = ({ onBack }: { onBack: () => void }) => {
 // --- Lecturer Dashboard ---
 
 const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => void }) => {
-  const [activeTab, setActiveTab] = useState<'home' | 'analytics' | 'attendance' | 'settings'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'analytics' | 'attendance' | 'settings'>(
+    () => (localStorage.getItem('lecturerActiveTab') as any) || 'home'
+  );
+
+  useEffect(() => {
+    localStorage.setItem('lecturerActiveTab', activeTab);
+  }, [activeTab]);
   const [isPrivacySettings, setIsPrivacySettings] = useState(false);
   const [courses, setCourses] = useState<any[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<any | null>(null);
@@ -1802,7 +1808,13 @@ const LecturerDashboard = ({ user, onLogout }: { user: User; onLogout: () => voi
 // --- Student Portal ---
 
 const StudentPortal = ({ user, onLogout, setUser }: { user: User; onLogout: () => void; setUser: (u: User) => void }) => {
-  const [activeTab, setActiveTab] = useState<'home' | 'analytics' | 'attendance' | 'registration' | 'settings'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'analytics' | 'attendance' | 'registration' | 'settings'>(
+    () => (localStorage.getItem('studentActiveTab') as any) || 'home'
+  );
+
+  useEffect(() => {
+    localStorage.setItem('studentActiveTab', activeTab);
+  }, [activeTab]);
   const [scanning, setScanning] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error' | 'info', message: string } | null>(null);
   const [loading, setLoading] = useState(false);
